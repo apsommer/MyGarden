@@ -10,6 +10,9 @@ import android.support.annotation.Nullable;
 import com.example.android.mygarden.provider.PlantContract;
 import com.example.android.mygarden.utils.PlantUtils;
 
+// TODO (2): Create a plant watering service that extends IntentService and supports the action
+// ACTION_WATER_PLANTS which updates last_watered timestamp for all plants still alive -->
+
 public class PlantWateringService extends IntentService {
 
     public PlantWateringService() {
