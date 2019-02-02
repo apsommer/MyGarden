@@ -43,7 +43,7 @@ public class PlantWateringService extends IntentService {
     // implement handleActionUpdatePlantWidgets to query the plant closest to dying and call
     // updatePlantWidgets to refresh widgets
 
-    public static final String ACTION_UPDATE_PLANT_WIDGETS = "com.example.android.mygarden.action.water_plants";
+    public static final String ACTION_UPDATE_PLANT_WIDGETS = "com.example.android.mygarden.action.update_plant_widgets";
 
     public PlantWateringService() {
         super("PlantWateringService");
@@ -85,7 +85,7 @@ public class PlantWateringService extends IntentService {
     private void handleActionUpdatePlantWidgets() {
 
         // plant table
-        Uri PLANT_URI = PlantContract.PlantEntry.CONTENT_URI.buildUpon()
+        Uri PLANT_URI = PlantContract.BASE_CONTENT_URI.buildUpon()
                 .appendPath(PlantContract.PATH_PLANTS).build();
 
         // order all plants by last water time, descending
@@ -131,6 +131,7 @@ public class PlantWateringService extends IntentService {
      * parameters.
      */
     private void handleActionWaterPlants() {
+
         Uri PLANTS_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLANTS).build();
         ContentValues contentValues = new ContentValues();
         long timeNow = System.currentTimeMillis();

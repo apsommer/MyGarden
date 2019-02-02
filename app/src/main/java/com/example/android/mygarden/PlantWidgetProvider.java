@@ -64,7 +64,7 @@ public class PlantWidgetProvider extends AppWidgetProvider {
     // TODO (2): Move the updateAppWidget loop to a new method called updatePlantWidgets and pass through
     // the image recourse. There may be multiple widgets active, so update all of them
 
-    static void updatePlantWidgets(Context context, AppWidgetManager appWidgetManager, int imageResource, int[] appWidgetIds) {
+    public static void updatePlantWidgets(Context context, AppWidgetManager appWidgetManager, int imageResource, int[] appWidgetIds) {
 
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, imageResource, appWidgetId);
