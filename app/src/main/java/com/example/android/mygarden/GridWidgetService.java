@@ -125,7 +125,7 @@ class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public int getViewTypeCount() {
-        return 1;
+        return 1; // means all views in the gridview are of the same type
     }
 
     @Override
