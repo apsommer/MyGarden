@@ -67,7 +67,7 @@ class GridRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     @Override
     public int getCount() {
         if (mCursor == null) return 0;
-        else return mCursor.getCount();
+        return mCursor.getCount();
     }
 
     /** This method acts like the onBindViewHolder method in an Adapter */

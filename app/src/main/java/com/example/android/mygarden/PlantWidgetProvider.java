@@ -52,26 +52,23 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         if (width < 300) remoteViews = getSinglePlantRemoteView(context, imgRes, plantId, showWater);
         else remoteViews = getGardenGridRemoteView(context);
 
+        // this is a framework call, not the same method as here! Come on!
+        appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+
     }
 
-    // TODO (6): Set the PendingIntent template in getGardenGridRemoteView to launch PlantDetailActivity
-    private static RemoteViews getGardenGridRemoteView(Context context) {
+    @Override
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        //Start the intent service update widget action, the service takes care of updating the widgets UI
+        PlantWateringService.startActionUpdatePlantWidgets(context);
+    }
 
-        // create RemoteViews object from the grid xml
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_grid_view);
+    public static void updatePlantWidgets(Context context, AppWidgetManager appWidgetManager,
+                                          int imgRes, long plantId, boolean showWater, int[] appWidgetIds) {
 
-        // set the GridWidgetService class as the adapter for the remote gridview
-        Intent intent = new Intent(context, GridWidgetService.class);
-        views.setRemoteAdapter(R.id.widget_grid_view, intent);
-
-        // set the pending intent template which applies to all items in the grid
-        // the individual plant IDs are added in a "fill in" intent in GridWidgetService getViewAt()
-        Intent itemClickIntent = new Intent(context, PlantDetailActivity.class);
-        PendingIntent itemClickPendingIntent = PendingIntent.getActivity(
-                context, 0, itemClickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setPendingIntentTemplate(R.id.widget_grid_view, itemClickPendingIntent);
-
-        return views;
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, imgRes, plantId, showWater, appWidgetId);
+        }
     }
 
     private static RemoteViews getSinglePlantRemoteView(Context context, int imgRes, long plantId, boolean showWater) {
@@ -107,17 +104,33 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         return views;
     }
 
-    @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        //Start the intent service update widget action, the service takes care of updating the widgets UI
-        PlantWateringService.startActionUpdatePlantWidgets(context);
+    // TODO (6): Set the PendingIntent template in getGardenGridRemoteView to launch PlantDetailActivity
+
+    private static RemoteViews getGardenGridRemoteView(Context context) {
+
+        // create RemoteViews object from the grid xml
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_grid_view);
+
+        // set the GridWidgetService class as the adapter for the remote gridview
+        Intent intent = new Intent(context, GridWidgetService.class);
+        views.setRemoteAdapter(R.id.widget_grid_view, intent);
+
+        // set the pending intent template which applies to all items in the grid
+        // the individual plant IDs are added in a "fill in" intent in GridWidgetService getViewAt()
+        Intent itemClickIntent = new Intent(context, PlantDetailActivity.class);
+        PendingIntent itemClickPendingIntent = PendingIntent.getActivity(
+                context, 0, itemClickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.widget_grid_view, itemClickPendingIntent);
+        views.setEmptyView(R.id.widget_grid_view, R.id.empty_view);
+
+        return views;
     }
 
-    public static void updatePlantWidgets(Context context, AppWidgetManager appWidgetManager,
-                                          int imgRes, long plantId, boolean showWater, int[] appWidgetIds) {
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, imgRes, plantId, showWater, appWidgetId);
-        }
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @Override
+    public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+        PlantWateringService.startActionUpdatePlantWidgets(context);
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 
     @Override
