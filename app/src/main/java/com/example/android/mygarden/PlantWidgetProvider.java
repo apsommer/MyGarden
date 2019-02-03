@@ -21,6 +21,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -38,6 +39,7 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         // or the MainActivity if plant ID is invalid
 
         Intent intent;
+        Log.e("~~", String.valueOf(plantId));
         if (plantId == PlantContract.INVALID_PLANT_ID) {
             intent = new Intent(context, MainActivity.class);
         } else {
