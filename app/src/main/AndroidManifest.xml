@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.android.mygarden">
 
     <application
@@ -7,7 +8,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <receiver android:name=".PlantWidgetProvider">
             <intent-filter>
@@ -21,13 +23,8 @@
 
         <service android:name=".PlantWateringService" />
 
-        <!-- TODO (1): Create a new layout called widget_grid_view.xml that contains a GridView and
-        another fallback RelativeLayout for empty gardens -->
 
-        <!-- TODO (2): Create a RemoteViewsService class and a RemoteViewsFactory class with:
-                        - onDataSetChanged querying the list of all plants in the database
-                        - getViewAt creating a RemoteView using the plant_widget layout
-                        - getViewAt setting the fillInIntent for widget_plant_image with the plant ID as extras -->
+
 
         <!-- TODO (3); Register the RemoteViewsService in the Manifest -->
 
