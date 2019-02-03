@@ -52,7 +52,7 @@ public class PlantWidgetProvider extends AppWidgetProvider {
         if (width < 300) remoteViews = getSinglePlantRemoteView(context, imgRes, plantId, showWater);
         else remoteViews = getGardenGridRemoteView(context);
 
-        // this is a framework call, not the same method as here! Come on!
+        // this is a framework call with the same name as the current method
         appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
 
     }
